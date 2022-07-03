@@ -1,39 +1,44 @@
-<head>
-<style type="text.css">
-  .turbolinks-progress-bar {
-    position: fixed;
-    display:block;
-    top:0;
-    height:3px;
-    background: #0076ff;
-    z-index: 9999;
-    transition: width 300ms ease-out,opacity 150ms 150ms ease-in;
-    transform: translate3d(0, 0, 0);
-  }
-</style>
-<link rel="stylesheet" media="all" href"/assets/application-d12397cbc3a266ce5a99f7b588223090c55ca04a439953bb5f9304395de93fc3.css"data-turbolinks-track="reload">
-<script src="/assets/application-114264dd93c8ff30e4335b71eed7949d66c4e7a8eb62e2de6284c046fe07104b.js"data-turbolinks-track="reload"></script>
-<title>WebCampBackendNew</title>
-<meta name="csrf-param" content="authenticity_token">
-<meta neme="csrf-token" content="JyvXgoZ+jTpWoW0iZoBm6HKF//LcpwUUYWb3hzlIUd7HLPLkpbR+XVnmf+iMq1no3IGe/bbv4EfPCm8YOf7pMg==">
-</head>
 
-<body>
-  <p id="notice"></p>
-  <h1>Books</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Body</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-    <tbody>
-      
-    </tbody>
-  </table>
+<h1>Books</h1>
+<table>
+<thead>
+  <tr>
+    <th>Title</th>
+    <th>Body</th>
+  </tr>
+</thead>
+
+<tbody>
+<% @books.each do |book| %>
+<tr>
+  <td><%= book.title %></td>
+  <td><%= book.body %></td>
+  <td><%= link_to 'Show', book %></td>
+  <td><%= link_to 'Edit', edit_book_path(book) %></td>
+  <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   
-  <h2>New book</h2>
   
-</body>
+</tr>
+    <% if flash[:notice] %>
+      <div class="flash">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
+
+<% end %>
+
+  </tbody>
+</table>
+  
+<h1>New Book</h1>
+<%= form_with model: @book, url: '/books', method: :post do |f| %>
+  <H4>Title</H4>
+  <%= f.text_field :title %>
+  
+  
+  <h4>body</h4>
+  <%= f.text_area :body %>
+  
+  <%= f.submit 'Creat Book' %>
+<% end %>
